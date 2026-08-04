@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Kingz Dashboard</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -14,341 +21,808 @@
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   background:#f5f7fa;
+
   color:#111827;
+}
+
+button,
+input,
+textarea{
+  font-family:inherit;
 }
 
 .hidden{
   display:none!important;
 }
 
-/* LOGIN */
+
+/* =========================
+   LOGIN
+========================= */
+
 .login-page{
+
   min-height:100vh;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   padding:20px;
+
   background:#f5f7fa;
+
 }
 
 .login-box{
+
   width:100%;
+
   max-width:400px;
-  background:white;
-  border:1px solid #e5e7eb;
+
+  background:#fff;
+
+  border:
+    1px solid
+    #e5e7eb;
+
   border-radius:20px;
+
   padding:30px;
-  box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.08);
+
 }
 
 .logo{
+
   width:58px;
+
   height:58px;
+
   border-radius:16px;
+
   background:#111827;
+
   color:white;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   font-size:24px;
+
   font-weight:bold;
+
   margin-bottom:18px;
+
 }
 
 h1{
+
   font-size:25px;
+
   margin-bottom:7px;
+
 }
 
 .sub{
+
   color:#6b7280;
+
   font-size:14px;
+
   margin-bottom:25px;
+
 }
 
 .input{
+
   width:100%;
+
   padding:14px 15px;
-  border:1px solid #d1d5db;
+
+  border:
+    1px solid
+    #d1d5db;
+
   border-radius:12px;
+
   outline:none;
+
   margin-bottom:12px;
+
   font-size:15px;
+
+  background:white;
+
 }
 
 .input:focus{
+
   border-color:#111827;
+
 }
 
 .btn{
+
   width:100%;
+
   border:0;
+
   padding:14px;
+
   border-radius:12px;
+
   background:#111827;
+
   color:white;
+
   font-weight:bold;
+
   cursor:pointer;
+
 }
 
 .btn:disabled{
+
   opacity:.5;
+
+  cursor:not-allowed;
+
 }
 
 .error{
+
   color:#dc2626;
+
   font-size:13px;
+
   margin-top:10px;
+
 }
 
-/* DASHBOARD */
+
+/* =========================
+   DASHBOARD
+========================= */
+
 .dashboard{
+
   min-height:100vh;
+
 }
 
 .topbar{
+
   height:70px;
+
   background:white;
-  border-bottom:1px solid #e5e7eb;
+
+  border-bottom:
+    1px solid
+    #e5e7eb;
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
-  padding:0 22px;
+
+  padding:
+    0 22px;
+
   position:sticky;
+
   top:0;
+
   z-index:10;
+
 }
 
 .brand{
+
   font-weight:800;
+
   font-size:20px;
+
 }
 
 .brand span{
+
   color:#6b7280;
+
   font-weight:500;
+
 }
 
 .logout{
+
   background:#f3f4f6;
+
   border:0;
-  padding:10px 14px;
+
+  padding:
+    10px 14px;
+
   border-radius:10px;
+
   cursor:pointer;
+
 }
 
 .container{
+
   width:100%;
+
   max-width:1050px;
+
   margin:auto;
-  padding:25px 18px 50px;
+
+  padding:
+    25px 18px 50px;
+
 }
 
+
+/* =========================
+   NOTICE
+========================= */
+
 .notice{
+
   background:white;
-  border:1px solid #e5e7eb;
+
+  border:
+    1px solid
+    #e5e7eb;
+
   border-radius:17px;
+
   padding:20px;
+
   margin-bottom:20px;
+
 }
 
 .notice-title{
+
   font-weight:bold;
+
   margin-bottom:7px;
+
 }
 
 .notice-text{
+
   color:#6b7280;
+
   font-size:14px;
+
 }
 
 .status{
+
   display:inline-flex;
+
   align-items:center;
+
   gap:8px;
+
   margin-top:13px;
+
   background:#fff7ed;
+
   color:#c2410c;
-  border:1px solid #fed7aa;
-  padding:9px 12px;
+
+  border:
+    1px solid
+    #fed7aa;
+
+  padding:
+    9px 12px;
+
   border-radius:10px;
+
   font-size:13px;
+
   font-weight:bold;
+
 }
 
 .dot{
+
   width:8px;
+
   height:8px;
+
   border-radius:50%;
+
   background:#f97316;
+
 }
 
+
+/* =========================
+   GRID
+========================= */
+
 .grid{
+
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:20px;
+
 }
 
 .card{
+
   background:white;
-  border:1px solid #e5e7eb;
+
+  border:
+    1px solid
+    #e5e7eb;
+
   border-radius:17px;
+
   padding:20px;
+
 }
 
 .card h2{
+
   font-size:18px;
+
   margin-bottom:5px;
+
 }
 
 .card-desc{
+
   color:#6b7280;
+
   font-size:13px;
+
   margin-bottom:18px;
+
 }
 
-/* UPLOAD AREA FIX */
+
+/* =========================
+   FILE AREA
+========================= */
 
 .file-area{
+
   width:100%;
+
   min-height:170px;
-  border:2px dashed #d1d5db;
+
+  border:
+    2px dashed
+    #d1d5db;
+
   border-radius:16px;
-  padding:25px 15px;
+
+  padding:
+    25px 15px;
+
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
+
   justify-content:center;
+
   text-align:center;
+
   cursor:pointer;
-  margin:0 0 15px;
+
+  margin-bottom:15px;
+
   background:#fafafa;
+
 }
 
 .file-area:hover{
+
   background:#f3f4f6;
+
   border-color:#9ca3af;
+
+}
+
+.file-area input{
+
+  display:none;
+
 }
 
 .upload-icon{
+
   width:48px;
+
   height:48px;
+
   border-radius:14px;
+
   background:#111827;
+
   color:white;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   font-size:28px;
+
   margin-bottom:12px;
+
 }
 
 .upload-info{
+
   margin-top:7px;
+
   font-size:13px;
+
   color:#6b7280;
+
 }
 
 .upload-format{
+
   margin-top:5px;
+
   font-size:11px;
+
   color:#9ca3af;
+
 }
 
-/* PREVIEW MULTI FOTO */
+
+/* =========================
+   PREVIEW
+========================= */
 
 .preview-container{
+
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:8px;
+
   margin-bottom:15px;
+
 }
 
 .preview-box{
+
   position:relative;
+
   aspect-ratio:1/1;
+
   overflow:hidden;
+
   border-radius:12px;
+
   background:#f3f4f6;
-  border:1px solid #e5e7eb;
+
+  border:
+    1px solid
+    #e5e7eb;
+
 }
 
 .preview-box img{
+
   width:100%;
+
   height:100%;
+
   object-fit:cover;
+
 }
 
 .preview-number{
+
   position:absolute;
+
   left:7px;
+
   top:7px;
+
   background:#111827;
+
   color:white;
+
   font-size:11px;
+
   font-weight:bold;
-  padding:4px 7px;
+
+  padding:
+    4px 7px;
+
   border-radius:7px;
+
 }
 
-/* TEXTAREA */
+
+/* =========================
+   TEXTAREA
+========================= */
 
 textarea{
+
   display:block;
+
   width:100%;
+
   min-height:115px;
+
   max-height:250px;
+
   resize:vertical;
-  border:1px solid #d1d5db;
+
+  border:
+    1px solid
+    #d1d5db;
+
   border-radius:14px;
+
   padding:14px;
-  font-family:inherit;
+
   font-size:14px;
+
   outline:none;
-  margin:0 0 14px;
+
+  margin-bottom:14px;
+
   background:white;
+
 }
 
 textarea:focus{
+
   border-color:#111827;
+
 }
 
-/* BUTTON */
 
-#sendBtn{
-  display:block;
+/* =========================
+   HISTORY
+========================= */
+
+.history{
+
+  margin-top:20px;
+
+}
+
+.history-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:14px;
+
+  margin-top:15px;
+
+}
+
+.history-item{
+
+  border:
+    1px solid
+    #e5e7eb;
+
+  border-radius:14px;
+
+  overflow:hidden;
+
+  background:white;
+
+}
+
+.history-item img{
+
   width:100%;
-  min-height:52px;
+
+  height:190px;
+
+  object-fit:cover;
+
+  display:block;
+
 }
 
-/* MOBILE */
+.history-content{
+
+  padding:12px;
+
+}
+
+.history-text{
+
+  font-size:13px;
+
+  color:#374151;
+
+  word-break:break-word;
+
+}
+
+.history-time{
+
+  color:#9ca3af;
+
+  font-size:11px;
+
+  margin-top:7px;
+
+}
+
+.history-source{
+
+  display:inline-block;
+
+  margin-top:8px;
+
+  padding:
+    4px 7px;
+
+  border-radius:7px;
+
+  background:#f3f4f6;
+
+  color:#6b7280;
+
+  font-size:10px;
+
+  font-weight:bold;
+
+}
+
+.empty{
+
+  color:#9ca3af;
+
+  text-align:center;
+
+  padding:30px;
+
+  border:
+    1px dashed
+    #d1d5db;
+
+  border-radius:13px;
+
+  grid-column:1/-1;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+
+  text-align:center;
+
+  color:#9ca3af;
+
+  font-size:12px;
+
+  padding:
+    30px 0 0;
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+
+  position:fixed;
+
+  left:50%;
+
+  bottom:25px;
+
+  transform:
+    translate(-50%,20px);
+
+  background:#111827;
+
+  color:white;
+
+  padding:
+    12px 17px;
+
+  border-radius:12px;
+
+  font-size:13px;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.25s;
+
+  z-index:100;
+
+  max-width:
+    calc(100% - 30px);
+
+  text-align:center;
+
+}
+
+.toast.show{
+
+  opacity:1;
+
+  transform:
+    translate(-50%,0);
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:750px){
 
   .container{
-    padding:18px 14px 40px;
-  }
 
-  .card{
-    padding:20px;
+    padding:
+      18px 14px 40px;
+
   }
 
   .grid{
+
     display:block;
+
   }
 
   .grid > .card{
+
     margin-bottom:16px;
+
   }
 
-  .file-area{
-    min-height:155px;
-  }
+  .history-grid{
 
-  .preview-container{
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:
+      repeat(2,1fr);
+
   }
 
 }
@@ -356,23 +830,46 @@ textarea:focus{
 @media(max-width:400px){
 
   .preview-container{
-    grid-template-columns:repeat(2,1fr);
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+  }
+
+  .history-grid{
+
+    grid-template-columns:
+      1fr;
+
   }
 
 }
+
 </style>
+
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<section id="loginPage" class="login-page">
+
+<!-- ==================================================
+     LOGIN
+================================================== -->
+
+<section
+  id="loginPage"
+  class="login-page"
+>
 
   <div class="login-box">
 
-    <div class="logo">K</div>
+    <div class="logo">
+      K
+    </div>
 
-    <h1>Kingz</h1>
+    <h1>
+      Kingz
+    </h1>
 
     <p class="sub">
       Masuk ke dashboard untuk mengirim foto.
@@ -394,238 +891,460 @@ textarea:focus{
       autocomplete="current-password"
     >
 
-    <button class="btn" onclick="login()">
+    <button
+      id="loginBtn"
+      class="btn"
+      onclick="login()"
+    >
       Masuk
     </button>
 
-    <div id="loginError" class="error"></div>
+    <div
+      id="loginError"
+      class="error"
+    ></div>
 
   </div>
 
 </section>
 
 
-<!-- DASHBOARD -->
-<section id="dashboard" class="dashboard hidden">
+<!-- ==================================================
+     DASHBOARD
+================================================== -->
 
-  <header class="topbar">
+<section
+  id="dashboard"
+  class="dashboard hidden"
+>
 
-    <div class="brand">
-      Kingz <span>Dashboard</span>
+
+<header class="topbar">
+
+  <div class="brand">
+
+    Kingz
+    <span>
+      Dashboard
+    </span>
+
+  </div>
+
+  <button
+    class="logout"
+    onclick="logout()"
+  >
+    Keluar
+  </button>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- STATUS -->
+
+<div class="notice">
+
+  <div class="notice-title">
+    Status QR
+  </div>
+
+  <div class="notice-text">
+    Sistem sedang menunggu QR dari Telegram.
+    Proses biasanya membutuhkan sekitar 5–10 menit.
+  </div>
+
+  <div class="status">
+
+    <span class="dot"></span>
+
+    <span id="statusText">
+      Menunggu QR...
+    </span>
+
+  </div>
+
+</div>
+
+
+<div class="grid">
+
+
+<!-- ==================================================
+     UPLOAD
+================================================== -->
+
+<div class="card">
+
+  <h2>
+    Kirim Foto
+  </h2>
+
+  <div class="card-desc">
+    Upload beberapa foto sekaligus dan tambahkan pesan.
+  </div>
+
+
+  <label class="file-area">
+
+    <input
+      id="photo"
+      type="file"
+      accept="image/*"
+      multiple
+      onchange="previewPhotos()"
+    >
+
+    <div class="upload-icon">
+      ＋
     </div>
 
-    <button class="logout" onclick="logout()">
-      Keluar
-    </button>
+    <strong>
+      Pilih foto
+    </strong>
 
-  </header>
-
-
-  <main class="container">
-
-    <div class="notice">
-
-      <div class="notice-title">
-        Status QR
-      </div>
-
-      <div class="notice-text">
-        Sistem sedang menunggu QR dari Telegram.
-        Proses biasanya membutuhkan sekitar 5–10 menit.
-      </div>
-
-      <div class="status">
-        <span class="dot"></span>
-        <span id="statusText">
-          Menunggu QR...
-        </span>
-      </div>
-
+    <div class="upload-info">
+      Bisa memilih sampai 20 foto
     </div>
 
+    <div class="upload-format">
+      JPG • PNG • WEBP • Maks. 10 MB/foto
+    </div>
 
-    <div class="grid">
+  </label>
 
-      <!-- UPLOAD -->
-      <div class="card">
 
-        <h2>Kirim Foto</h2>
+  <div
+    id="previewContainer"
+    class="preview-container"
+  ></div>
 
-        <div class="card-desc">
-          Upload foto dan tambahkan pesan sebelum dikirim.
-        </div>
 
-        <label class="file-area">
+  <textarea
+    id="message"
+    placeholder="Tulis pesan..."
+  ></textarea>
 
-  <input
-    id="photo"
-    type="file"
-    accept="image/*"
-    multiple
-    onchange="previewPhotos()"
+
+  <button
+    id="sendBtn"
+    class="btn"
+    onclick="sendPhotos()"
+  >
+    Kirim ke Telegram
+  </button>
+
+</div>
+
+
+<!-- ==================================================
+     INFO
+================================================== -->
+
+<div class="card">
+
+  <h2>
+    Kingz System
+  </h2>
+
+  <div class="card-desc">
+    Informasi koneksi sistem.
+  </div>
+
+
+  <div style="
+    padding:15px;
+    background:#f9fafb;
+    border-radius:12px;
+    margin-bottom:10px;
+  ">
+
+    <b>
+      Username
+    </b>
+
+    <div style="
+      color:#6b7280;
+      margin-top:4px;
+    ">
+      Kingz
+    </div>
+
+  </div>
+
+
+  <div style="
+    padding:15px;
+    background:#f9fafb;
+    border-radius:12px;
+    margin-bottom:10px;
+  ">
+
+    <b>
+      Server
+    </b>
+
+    <div
+      id="serverStatus"
+      style="
+        color:#16a34a;
+        margin-top:4px;
+      "
+    >
+      Terhubung
+    </div>
+
+  </div>
+
+
+  <div style="
+    padding:15px;
+    background:#f9fafb;
+    border-radius:12px;
+  ">
+
+    <b>
+      Mode
+    </b>
+
+    <div style="
+      color:#6b7280;
+      margin-top:4px;
+    ">
+      Telegram Relay
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- ==================================================
+     HISTORY
+================================================== -->
+
+<div class="card history">
+
+  <h2>
+    History Gambar
+  </h2>
+
+  <div class="card-desc">
+    Foto dari website maupun Telegram akan muncul di sini.
+  </div>
+
+
+  <div
+    id="historyGrid"
+    class="history-grid"
   >
 
-  <div class="upload-icon">＋</div>
+    <div class="empty">
+      Belum ada gambar.
+    </div>
 
-  <strong>Pilih foto</strong>
-
-  <div class="upload-info">
-    Bisa pilih beberapa foto sekaligus
   </div>
 
-  <div class="upload-format">
-    JPG • PNG • WEBP • Maks. 10 MB/foto
-  </div>
-
-</label>
-
-<div id="previewContainer" class="preview-container"></div>
-
-<textarea
-  id="message"
-  placeholder="Tulis pesan..."
-></textarea>
-
-<button
-  id="sendBtn"
-  class="btn"
-  onclick="sendPhotos()"
->
-  Kirim ke Telegram
-</button>
 </div>
-      <!-- INFO -->
-      <div class="card">
-
-        <h2>Kingz System</h2>
-
-        <div class="card-desc">
-          Informasi koneksi sistem.
-        </div>
-
-        <div style="
-          padding:15px;
-          background:#f9fafb;
-          border-radius:12px;
-          margin-bottom:10px;
-        ">
-          <b>Username</b>
-          <div style="color:#6b7280;margin-top:4px">
-            Kingz
-          </div>
-        </div>
-
-        <div style="
-          padding:15px;
-          background:#f9fafb;
-          border-radius:12px;
-          margin-bottom:10px;
-        ">
-          <b>Status</b>
-          <div id="serverStatus"
-               style="color:#16a34a;margin-top:4px">
-            Terhubung
-          </div>
-        </div>
-
-        <div style="
-          padding:15px;
-          background:#f9fafb;
-          border-radius:12px;
-        ">
-          <b>Mode</b>
-          <div style="color:#6b7280;margin-top:4px">
-            Telegram Relay
-          </div>
-        </div>
-
-      </div>
-
-    </div>
 
 
-    <!-- HISTORY -->
-    <div class="card history">
-
-      <h2>History Gambar</h2>
-
-      <div class="card-desc">
-        Foto yang masuk dari web maupun Telegram akan muncul di sini.
-      </div>
-
-      <div
-        id="historyGrid"
-        class="history-grid"
-      >
-        <div class="empty">
-          Belum ada gambar.
-        </div>
-      </div>
-
-    </div>
+<div class="footer">
+  Moded by Pretvfx
+</div>
 
 
-    <div class="footer">
-      Moded by Pretvfx
-    </div>
-
-  </main>
+</main>
 
 </section>
 
 
-<div id="toast" class="toast"></div>
+<div
+  id="toast"
+  class="toast"
+></div>
 
 
 <script>
 
+/* ==================================================
+   PENTING
+================================================== */
+
+/*
+ * GANTI URL INI dengan URL yang keluar
+ * dari Cloudflare Quick Tunnel.
+ *
+ * CONTOH:
+ *
+ * https://abc-def-123.trycloudflare.com
+ */
+
+const API_URL =
+  "https://zain-pretvfx.trycloudflare.com";
+
+
+/* ==================================================
+   TOKEN LOGIN
+================================================== */
+
+let authToken =
+  localStorage.getItem(
+    "kingz_auth_token"
+  ) || "";
+
+
 let selectedFiles = [];
 
 
-/* =========================
+/* ==================================================
+   API HELPER
+================================================== */
+
+async function api(
+  endpoint,
+  options = {}
+){
+
+  const headers =
+    options.headers || {};
+
+
+  if(authToken){
+
+    headers[
+      "Authorization"
+    ] =
+      "Bearer " +
+      authToken;
+
+  }
+
+
+  options.headers =
+    headers;
+
+
+  const response =
+    await fetch(
+      API_URL +
+      endpoint,
+      options
+    );
+
+
+  /*
+   * Kalau token sudah tidak valid
+   */
+
+  if(
+    response.status === 401
+  ){
+
+    authToken = "";
+
+    localStorage.removeItem(
+      "kingz_auth_token"
+    );
+
+  }
+
+
+  return response;
+
+}
+
+
+/* ==================================================
    LOGIN
-========================= */
+================================================== */
 
 async function login(){
 
   const username =
-    document.getElementById("username").value.trim();
+    document
+      .getElementById(
+        "username"
+      )
+      .value
+      .trim();
+
 
   const password =
-    document.getElementById("password").value;
+    document
+      .getElementById(
+        "password"
+      )
+      .value;
+
 
   const error =
-    document.getElementById("loginError");
+    document
+      .getElementById(
+        "loginError"
+      );
+
+
+  const btn =
+    document
+      .getElementById(
+        "loginBtn"
+      );
+
 
   error.textContent = "";
 
-  if(!username || !password){
+
+  if(
+    !username ||
+    !password
+  ){
 
     error.textContent =
       "Username dan password wajib diisi.";
 
     return;
+
   }
+
+
+  btn.disabled = true;
+
+  btn.textContent =
+    "Memeriksa...";
+
 
   try{
 
     const res =
-      await fetch("/api/login", {
-        method:"POST",
+      await fetch(
+        API_URL +
+        "/api/login",
+        {
+          method:"POST",
 
-        headers:{
-          "Content-Type":
-            "application/json"
-        },
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
 
-        body:JSON.stringify({
-          username,
-          password
-        })
-      });
+          body:
+            JSON.stringify({
+
+              username,
+              password
+
+            })
+        }
+      );
+
 
     const data =
       await res.json();
+
 
     if(!res.ok){
 
@@ -634,32 +1353,62 @@ async function login(){
         "Login gagal.";
 
       return;
+
     }
+
+
+    authToken =
+      data.token;
+
+
+    localStorage.setItem(
+      "kingz_auth_token",
+      authToken
+    );
+
 
     showDashboard();
 
-  }catch(error){
 
-    console.error(error);
+  }catch(err){
+
+    console.error(err);
 
     error.textContent =
       "Server tidak dapat dihubungi.";
+
+  }finally{
+
+    btn.disabled = false;
+
+    btn.textContent =
+      "Masuk";
 
   }
 
 }
 
 
-/* =========================
+/* ==================================================
    CHECK LOGIN
-========================= */
+================================================== */
 
 async function checkLogin(){
+
+  if(!authToken){
+
+    return;
+
+  }
+
 
   try{
 
     const res =
-      await fetch("/api/me");
+      await api(
+        "/api/me"
+      );
+
 
     if(res.ok){
 
@@ -676,34 +1425,44 @@ async function checkLogin(){
 }
 
 
-/* =========================
-   SHOW DASHBOARD
-========================= */
+/* ==================================================
+   DASHBOARD
+================================================== */
 
 function showDashboard(){
 
   document
-    .getElementById("loginPage")
-    .classList.add("hidden");
+    .getElementById(
+      "loginPage"
+    )
+    .classList
+    .add("hidden");
+
 
   document
-    .getElementById("dashboard")
-    .classList.remove("hidden");
+    .getElementById(
+      "dashboard"
+    )
+    .classList
+    .remove("hidden");
+
 
   loadHistory();
+
+  checkServer();
 
 }
 
 
-/* =========================
+/* ==================================================
    LOGOUT
-========================= */
+================================================== */
 
 async function logout(){
 
   try{
 
-    await fetch(
+    await api(
       "/api/logout",
       {
         method:"POST"
@@ -712,32 +1471,52 @@ async function logout(){
 
   }catch(error){}
 
+
+  authToken = "";
+
+  localStorage.removeItem(
+    "kingz_auth_token"
+  );
+
+
   location.reload();
 
 }
 
 
-/* =========================
-   MULTI PHOTO PREVIEW
-========================= */
+/* ==================================================
+   PREVIEW MULTI PHOTO
+================================================== */
 
 function previewPhotos(){
 
   const input =
-    document.getElementById("photo");
+    document
+      .getElementById(
+        "photo"
+      );
+
 
   const container =
-    document.getElementById(
-      "previewContainer"
-    );
+    document
+      .getElementById(
+        "previewContainer"
+      );
+
 
   selectedFiles =
-    Array.from(input.files);
+    Array.from(
+      input.files
+    );
 
-  container.innerHTML = "";
+
+  container.innerHTML =
+    "";
 
 
-  if(!selectedFiles.length){
+  if(
+    !selectedFiles.length
+  ){
 
     return;
 
@@ -748,25 +1527,23 @@ function previewPhotos(){
 
 
   selectedFiles.forEach(
-    (file,index)=>{
-
-      /* Harus gambar */
+    (file) => {
 
       if(
-        !file.type.startsWith("image/")
+        !file.type.startsWith(
+          "image/"
+        )
       ){
 
         showToast(
           file.name +
-          " bukan file gambar."
+          " bukan gambar."
         );
 
         return;
 
       }
 
-
-      /* Maksimal 10 MB */
 
       if(
         file.size >
@@ -783,8 +1560,29 @@ function previewPhotos(){
       }
 
 
-      validFiles.push(file);
+      if(
+        validFiles.length >= 20
+      ){
 
+        return;
+
+      }
+
+
+      validFiles.push(
+        file
+      );
+
+    }
+  );
+
+
+  selectedFiles =
+    validFiles;
+
+
+  selectedFiles.forEach(
+    (file,index) => {
 
       const box =
         document.createElement(
@@ -800,8 +1598,11 @@ function previewPhotos(){
           "img"
         );
 
+
       img.src =
-        URL.createObjectURL(file);
+        URL.createObjectURL(
+          file
+        );
 
 
       const number =
@@ -809,36 +1610,44 @@ function previewPhotos(){
           "div"
         );
 
+
       number.className =
         "preview-number";
 
+
       number.textContent =
-        validFiles.length;
+        index + 1;
 
 
-      box.appendChild(img);
+      box.appendChild(
+        img
+      );
 
-      box.appendChild(number);
 
-      container.appendChild(box);
+      box.appendChild(
+        number
+      );
+
+
+      container.appendChild(
+        box
+      );
 
     }
   );
 
-
-  selectedFiles =
-    validFiles;
-
 }
 
 
-/* =========================
-   SEND MULTIPLE PHOTOS
-========================= */
+/* ==================================================
+   SEND PHOTOS
+================================================== */
 
 async function sendPhotos(){
 
-  if(!selectedFiles.length){
+  if(
+    !selectedFiles.length
+  ){
 
     showToast(
       "Pilih foto terlebih dahulu."
@@ -850,15 +1659,18 @@ async function sendPhotos(){
 
 
   const message =
-    document.getElementById(
-      "message"
-    ).value;
+    document
+      .getElementById(
+        "message"
+      )
+      .value;
 
 
   const btn =
-    document.getElementById(
-      "sendBtn"
-    );
+    document
+      .getElementById(
+        "sendBtn"
+      );
 
 
   btn.disabled = true;
@@ -874,13 +1686,6 @@ async function sendPhotos(){
     const form =
       new FormData();
 
-
-    /*
-     * Nama field harus sama
-     * dengan server:
-     *
-     * upload.array("photos", 20)
-     */
 
     selectedFiles.forEach(
       file => {
@@ -901,7 +1706,7 @@ async function sendPhotos(){
 
 
     const res =
-      await fetch(
+      await api(
         "/api/send",
         {
           method:"POST",
@@ -918,7 +1723,7 @@ async function sendPhotos(){
 
       showToast(
         data.error ||
-        "Gagal mengirim foto."
+        "Gagal mengirim."
       );
 
       return;
@@ -932,23 +1737,28 @@ async function sendPhotos(){
     );
 
 
-    /*
-     * Reset upload
-     */
-
-    document.getElementById(
-      "photo"
-    ).value = "";
-
-
-    document.getElementById(
-      "message"
-    ).value = "";
+    document
+      .getElementById(
+        "photo"
+      )
+      .value =
+      "";
 
 
-    document.getElementById(
-      "previewContainer"
-    ).innerHTML = "";
+    document
+      .getElementById(
+        "message"
+      )
+      .value =
+      "";
+
+
+    document
+      .getElementById(
+        "previewContainer"
+      )
+      .innerHTML =
+      "";
 
 
     selectedFiles = [];
@@ -959,13 +1769,10 @@ async function sendPhotos(){
 
   }catch(error){
 
-    console.error(
-      "SEND ERROR:",
-      error
-    );
+    console.error(error);
 
     showToast(
-      "Terjadi kesalahan koneksi."
+      "Gagal terhubung ke server."
     );
 
   }finally{
@@ -980,16 +1787,23 @@ async function sendPhotos(){
 }
 
 
-/* =========================
+/* ==================================================
    HISTORY
-========================= */
+================================================== */
 
 async function loadHistory(){
+
+  if(!authToken){
+
+    return;
+
+  }
+
 
   try{
 
     const res =
-      await fetch(
+      await api(
         "/api/history"
       );
 
@@ -1005,13 +1819,15 @@ async function loadHistory(){
       await res.json();
 
 
-    renderHistory(items);
+    renderHistory(
+      items
+    );
 
 
   }catch(error){
 
     console.error(
-      "HISTORY ERROR:",
+      "History error:",
       error
     );
 
@@ -1020,19 +1836,25 @@ async function loadHistory(){
 }
 
 
-/* =========================
+/* ==================================================
    RENDER HISTORY
-========================= */
+================================================== */
 
-function renderHistory(items){
+function renderHistory(
+  items
+){
 
   const grid =
-    document.getElementById(
-      "historyGrid"
-    );
+    document
+      .getElementById(
+        "historyGrid"
+      );
 
 
-  if(!items.length){
+  if(
+    !items ||
+    !items.length
+  ){
 
     grid.innerHTML = `
       <div class="empty">
@@ -1046,60 +1868,216 @@ function renderHistory(items){
 
 
   grid.innerHTML =
-    items.map(
-      item => `
+    "";
 
-      <div class="history-item">
 
-        <img
-          src="${escapeHtml(item.url)}"
-          alt="History"
-          loading="lazy"
-        >
+  items.forEach(
+    item => {
 
-        <div class="history-content">
+      const wrapper =
+        document.createElement(
+          "div"
+        );
 
-          <div class="history-text">
-            ${escapeHtml(
-              item.caption ||
-              "Tanpa pesan"
-            )}
-          </div>
 
-          <div class="history-time">
-            ${escapeHtml(
-              item.time || ""
-            )}
-          </div>
+      wrapper.className =
+        "history-item";
 
-        </div>
 
-      </div>
+      const img =
+        document.createElement(
+          "img"
+        );
 
-    `
-    ).join("");
+
+      /*
+       * Backend sudah mengembalikan
+       * URL Cloudflare lengkap.
+       */
+
+      img.src =
+        item.url;
+
+
+      img.alt =
+        "History";
+
+
+      img.loading =
+        "lazy";
+
+
+      const content =
+        document.createElement(
+          "div"
+        );
+
+
+      content.className =
+        "history-content";
+
+
+      const text =
+        document.createElement(
+          "div"
+        );
+
+
+      text.className =
+        "history-text";
+
+
+      text.textContent =
+        item.caption ||
+        "Tanpa pesan";
+
+
+      const time =
+        document.createElement(
+          "div"
+        );
+
+
+      time.className =
+        "history-time";
+
+
+      time.textContent =
+        item.time ||
+        "";
+
+
+      const source =
+        document.createElement(
+          "div"
+        );
+
+
+      source.className =
+        "history-source";
+
+
+      source.textContent =
+        (
+          item.source ===
+          "telegram"
+        )
+          ? "TELEGRAM"
+          : "WEB";
+
+
+      content.appendChild(
+        text
+      );
+
+
+      content.appendChild(
+        time
+      );
+
+
+      content.appendChild(
+        source
+      );
+
+
+      wrapper.appendChild(
+        img
+      );
+
+
+      wrapper.appendChild(
+        content
+      );
+
+
+      grid.appendChild(
+        wrapper
+      );
+
+    }
+  );
 
 }
 
 
-/* =========================
-   AUTO REFRESH HISTORY
-========================= */
+/* ==================================================
+   SERVER STATUS
+================================================== */
+
+async function checkServer(){
+
+  try{
+
+    const res =
+      await api(
+        "/api/status"
+      );
+
+
+    const status =
+      document
+        .getElementById(
+          "serverStatus"
+        );
+
+
+    if(
+      res.ok
+    ){
+
+      status.textContent =
+        "Terhubung";
+
+      status.style.color =
+        "#16a34a";
+
+    }else{
+
+      status.textContent =
+        "Tidak terhubung";
+
+      status.style.color =
+        "#dc2626";
+
+    }
+
+  }catch(error){
+
+    const status =
+      document
+        .getElementById(
+          "serverStatus"
+        );
+
+
+    status.textContent =
+      "Tidak terhubung";
+
+    status.style.color =
+      "#dc2626";
+
+  }
+
+}
+
+
+/* ==================================================
+   AUTO HISTORY
+================================================== */
 
 setInterval(
   () => {
 
-    const dashboard =
-      document.getElementById(
-        "dashboard"
-      );
-
-
     if(
-      dashboard &&
-      !dashboard.classList.contains(
-        "hidden"
-      )
+      !document
+        .getElementById(
+          "dashboard"
+        )
+        .classList
+        .contains(
+          "hidden"
+        )
     ){
 
       loadHistory();
@@ -1107,20 +2085,23 @@ setInterval(
     }
 
   },
-  3000
+  5000
 );
 
 
-/* =========================
+/* ==================================================
    TOAST
-========================= */
+================================================== */
 
-function showToast(text){
+function showToast(
+  text
+){
 
   const toast =
-    document.getElementById(
-      "toast"
-    );
+    document
+      .getElementById(
+        "toast"
+      );
 
 
   toast.textContent =
@@ -1146,45 +2127,34 @@ function showToast(text){
 }
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/* ==================================================
+   ENTER LOGIN
+================================================== */
 
-function escapeHtml(value){
+document
+  .getElementById(
+    "password"
+  )
+  .addEventListener(
+    "keydown",
+    event => {
 
-  return String(value)
+      if(
+        event.key ===
+        "Enter"
+      ){
 
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
+        login();
 
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
+      }
 
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
+    }
+  );
 
 
-/* =========================
+/* ==================================================
    START
-========================= */
+================================================== */
 
 checkLogin();
 
