@@ -247,7 +247,8 @@
             font-weight: 700;
         }
 
-        .badge-web { background-color: #e0f2fe; color: #0369a1; }
+        .badge-request { background-color: #e0f2fe; color: #0369a1; }
+        .badge-hasil { background-color: #dcfce7; color: #15803d; }
 
         .time-text {
             font-size: 0.62rem;
@@ -280,6 +281,42 @@
             font-weight: 600;
             margin-top: 8px;
             line-height: 1.3;
+        }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .btn-act {
+            flex: 1;
+            padding: 6px 4px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+
+        .btn-act:hover {
+            opacity: 0.85;
+        }
+
+        .btn-download {
+            background-color: #0f172a;
+            color: #ffffff;
+        }
+
+        .btn-delete {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fee2e2;
         }
 
         .status {
@@ -323,7 +360,7 @@
             <div class="notice-box" id="noticeBox">
                 <span class="icon" id="noticeIcon">⏳</span>
                 <div id="noticeContent">
-                    <strong>Pemberitahuan:</strong> Harap tunggu proses QR Code, biasanya memakan waktu sekitar <strong>5 - 10 menit</strong>.
+                    <strong>Pemberitahuan:</strong> Harap tunggu proses Pembuatan Thema QR Code, biasanya memakan waktu sekitar <strong>5 - 10 menit</strong>.
                 </div>
             </div>
 
@@ -358,11 +395,7 @@
 </div>
 
 <script>
-    // =========================================================================
-    // PASTE URL CLOUDFLARE TUNNEL DI BAWAH INI (Satu tempat saja):
-    // =========================================================================
-    const API_URL = "https://compatibility-bicycle-relates-computed.trycloudflare.com";
-    // =========================================================================
+    const API_URL = "https://conservative-irc-returning-thereof.trycloudflare.com";
 
     let syncInterval = null;
 
@@ -500,6 +533,24 @@
         }
     }
 
+    async function deleteHistory(id) {
+        if (!confirm("Apakah Anda yakin ingin menghapus history ini?")) return;
+
+        try {
+            const res = await fetch(`${getBaseUrl()}/api/history/${id}`, {
+                method: 'DELETE'
+            });
+            const data = await res.json();
+            if (data.success) {
+                fetchHistory();
+            } else {
+                alert("Gagal menghapus: " + data.message);
+            }
+        } catch (e) {
+            alert("Error saat menghapus history!");
+        }
+    }
+
     function renderHistory(history) {
         const grid = document.getElementById('historyGrid');
         grid.innerHTML = "";
@@ -514,10 +565,20 @@
             div.className = 'history-item';
             
             const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
+            const isTelegram = item.source === 'telegram';
 
-            const isPending = item.status === 'pending' || !item.status;
+            // Mengubah badge "TELEGRAM" menjadi "HASIL QR"
+            const badgeClass = isTelegram ? 'badge-hasil' : 'badge-request';
+            const badgeLabel = isTelegram ? 'HASIL QR' : 'REQUEST';
+
+            const isPending = item.status === 'pending';
             const statusClass = isPending ? 'status-box-pending' : 'status-box-completed';
             const statusText = item.statusText || (isPending ? '⏳ Tema sedang dibuat, mohon tunggu' : '✅ Tema QRIS telah dibuat');
+
+            let downloadBtn = '';
+            if (isTelegram) {
+                downloadBtn = `<a href="${fullImgUrl}" download target="_blank" class="btn-act btn-download">📥 Download</a>`;
+            }
 
             div.innerHTML = `
                 <img src="${fullImgUrl}" alt="Foto" onclick="window.open('${fullImgUrl}', '_blank')">
@@ -525,11 +586,17 @@
                     <div>
                         <p title="${item.caption}">${item.caption}</p>
                         <div class="badge-container">
-                            <span class="badge badge-web">WEB</span>
+                            <span class="badge ${badgeClass}">${badgeLabel}</span>
                             <span class="time-text">${item.time || ''}</span>
                         </div>
                     </div>
+                    
                     <div class="${statusClass}">${statusText}</div>
+
+                    <div class="action-btns">
+                        ${downloadBtn}
+                        <button onclick="deleteHistory('${item.id}')" class="btn-act btn-delete">🗑️ Hapus</button>
+                    </div>
                 </div>
             `;
             grid.appendChild(div);
