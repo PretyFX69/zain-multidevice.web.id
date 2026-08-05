@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - moded by Pretvfx</title>
+    <title>AI QR Code Generator - moded by Pretvfx</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,23 +19,23 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 20px 12px;
         }
 
         .container {
             width: 100%;
-            max-width: 550px;
+            max-width: 500px;
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
 
         .header {
             background: #ffffff;
             border-bottom: 1px solid #f1f5f9;
-            padding: 24px;
+            padding: 20px 24px;
             text-align: center;
         }
 
@@ -46,73 +46,36 @@
         }
 
         .header p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #64748b;
-            margin-top: 4px;
+            margin-top: 2px;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         .content {
-            padding: 24px;
-        }
-
-        .notice-box {
-            background-color: #fffbeb;
-            border: 1px solid #fde68a;
-            color: #b45309;
-            padding: 14px 16px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            line-height: 1.4;
-            transition: all 0.3s ease;
-        }
-
-        .notice-box.success {
-            background-color: #f0fdf4;
-            border-color: #bbf7d0;
-            color: #166534;
-        }
-
-        .notice-box .icon {
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-
-        .qris-preview {
-            width: 100%;
-            max-height: 250px;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-top: 10px;
-            border: 1px solid #cbd5e1;
-            background: #ffffff;
+            padding: 20px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #334155;
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 12px 14px;
+            padding: 12px;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
             background: #ffffff;
             color: #0f172a;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
             transition: all 0.2s;
         }
@@ -135,47 +98,157 @@
             transition: background 0.2s;
         }
 
-        .btn:hover {
-            background-color: #334155;
-        }
-
-        .btn:disabled {
-            background-color: #94a3b8;
-            cursor: not-allowed;
-        }
+        .btn:hover { background-color: #334155; }
+        .btn:disabled { background-color: #94a3b8; cursor: not-allowed; }
 
         .btn-logout {
             background-color: #fef2f2;
-            color: #991b1b;
-            margin-top: 25px;
+            color: #dc2626;
+            margin-top: 24px;
+            border: 1px solid #fee2e2;
+        }
+        .btn-logout:hover { background-color: #fee2e2; }
+
+        .hidden { display: none !important; }
+
+        /* NOTIFIKASI SUKSES KIRIM */
+        .alert-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-top: 14px;
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* OUTPUT GENERATE SECTION (BESAR) */
+        .output-section {
+            margin-top: 22px;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 18px;
+        }
+
+        .output-header {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .output-container-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .result-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            width: 100%;
+        }
+
+        .badge-status-green {
+            display: inline-block;
+            background-color: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 6px;
+        }
+
+        .badge-status-yellow {
+            display: inline-block;
+            background-color: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 6px;
+        }
+
+        .result-card .caption-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .result-card img {
+            width: 100%;
+            max-height: 320px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+        }
+
+        /* TOMBOL AKSI UTAMA */
+        .action-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-act-main {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+        .btn-act-main:hover { opacity: 0.9; }
+
+        .btn-download-main {
+            background-color: #0f172a;
+            color: #ffffff;
+        }
+
+        .btn-delete-main {
+            background-color: #fef2f2;
+            color: #dc2626;
             border: 1px solid #fee2e2;
         }
 
-        .btn-logout:hover {
-            background-color: #fee2e2;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Gallery History */
+        /* HISTORY SECTIONS */
         .history-section {
-            margin-top: 30px;
+            margin-top: 20px;
             border-top: 1px solid #f1f5f9;
-            padding-top: 20px;
+            padding-top: 16px;
         }
 
         .history-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .history-header h3 {
-            font-size: 1.05rem;
+            font-size: 0.9rem;
             color: #0f172a;
+            font-weight: 700;
         }
 
         .live-dot {
@@ -189,8 +262,8 @@
 
         .history-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
         }
 
         .history-item {
@@ -204,142 +277,58 @@
 
         .history-item img {
             width: 100%;
-            height: 110px;
+            height: 85px;
             object-fit: cover;
-            display: block;
             cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .history-item img:hover {
-            opacity: 0.9;
         }
 
         .history-item .info {
-            padding: 8px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
             justify-content: space-between;
+            flex-grow: 1;
         }
 
         .history-item p {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #334155;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-weight: 500;
-        }
-
-        .badge-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 4px;
-        }
-
-        .badge {
-            display: inline-block;
-            font-size: 0.62rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        .badge-request { background-color: #e0f2fe; color: #0369a1; }
-        .badge-hasil { background-color: #dcfce7; color: #15803d; }
-
-        .time-text {
-            font-size: 0.62rem;
-            color: #94a3b8;
-        }
-
-        .status-box-pending {
-            display: block;
-            text-align: center;
-            background-color: #fffbeb;
-            color: #b45309;
-            border: 1px solid #fde68a;
-            padding: 6px 4px;
-            border-radius: 6px;
-            font-size: 0.68rem;
             font-weight: 600;
-            margin-top: 8px;
-            line-height: 1.3;
         }
 
-        .status-box-completed {
-            display: block;
-            text-align: center;
-            background-color: #f0fdf4;
-            color: #15803d;
-            border: 1px solid #bbf7d0;
-            padding: 6px 4px;
-            border-radius: 6px;
-            font-size: 0.68rem;
-            font-weight: 600;
-            margin-top: 8px;
-            line-height: 1.3;
-        }
-
-        /* Action Buttons */
-        .action-btns {
-            display: flex;
-            gap: 4px;
-            margin-top: 8px;
-        }
-
-        .btn-act {
-            flex: 1;
-            padding: 6px 4px;
-            font-size: 0.68rem;
-            font-weight: 600;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-            display: inline-block;
-            transition: opacity 0.2s;
-        }
-
-        .btn-act:hover {
-            opacity: 0.85;
-        }
-
-        .btn-download {
-            background-color: #0f172a;
-            color: #ffffff;
-        }
-
-        .btn-delete {
+        .btn-delete-sm {
+            width: 100%;
+            padding: 4px;
+            font-size: 0.65rem;
             background-color: #fef2f2;
             color: #dc2626;
             border: 1px solid #fee2e2;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        .status {
+        .status-msg {
             font-size: 0.85rem;
-            margin-top: 12px;
+            margin-top: 10px;
             text-align: center;
             font-weight: 600;
         }
-
-        .status.success { color: #16a34a; }
-        .status.error { color: #dc2626; }
+        .status-msg.error { color: #dc2626; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h2 id="titleHeader">Generate Theme Qris</h2>
+        <h2 id="titleHeader">Generate Thema Qr</h2>
         <p>moded by Pretvfx</p>
     </div>
 
     <div class="content">
-        <!-- FORM LOGIN -->
+        <!-- LOGIN SECTION -->
         <div id="loginSection">
             <div class="form-group">
                 <label>Username</label>
@@ -350,20 +339,13 @@
                 <input type="password" id="passwordInput" placeholder="Masukkan password">
             </div>
             <button class="btn" onclick="handleLogin()">Masuk</button>
-            <div id="loginStatus" class="status error"></div>
+            <div id="loginStatus" class="status-msg error"></div>
         </div>
 
-        <!-- DASHBOARD PANEL -->
+        <!-- DASHBOARD SECTION -->
         <div id="dashboardSection" class="hidden">
             
-            <!-- NOTICE STATUS QRIS AUTOMATIC -->
-            <div class="notice-box" id="noticeBox">
-                <span class="icon" id="noticeIcon">⏳</span>
-                <div id="noticeContent">
-                    <strong>Pemberitahuan:</strong> Harap tunggu proses Pembuatan Thema QR Code, biasanya memakan waktu sekitar <strong>5 - 10 menit</strong>.
-                </div>
-            </div>
-
+            <!-- FORM INPUT -->
             <form id="uploadForm">
                 <div class="form-group">
                     <label>Pilih Foto (Bisa Kirim Banyak/3 Foto)</label>
@@ -371,20 +353,37 @@
                 </div>
                 <div class="form-group">
                     <label>Pesan / Teks Caption</label>
-                    <textarea id="captionInput" rows="3" placeholder="Request Theme"></textarea>
+                    <textarea id="captionInput" rows="2" placeholder="Request Theme"></textarea>
                 </div>
                 <button type="submit" class="btn" id="sendBtn">Membuat</button>
             </form>
             
-            <div id="sendStatus" class="status"></div>
+            <!-- NOTIFIKASI SETELAH MENGIRIM -->
+            <div id="notifBox" class="hidden"></div>
 
-            <!-- GALLERY HISTORY -->
-            <div class="history-section">
-                <div class="history-header">
-                    <h3>History Gambar</h3>
+            <!-- HASIL GENERATE UTAMA (TAMPILAN FOTO BESAR TERBARU) -->
+            <div class="output-section">
+                <div class="output-header">
+                    <span>✨ Hasil Generate Baru</span>
                     <span style="font-size:0.75rem; color:#64748b;">
                         <span class="live-dot"></span>Live Sync
                     </span>
+                </div>
+                <div id="outputContainer" class="output-container-list"></div>
+            </div>
+
+            <!-- HISTORY HASIL GENERATE QR (GRID FOTO DARI TELEGRAM) -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>🎨 History Hasil Generate QR</h3>
+                </div>
+                <div class="history-grid" id="historyHasilGrid"></div>
+            </div>
+
+            <!-- HISTORY REQUEST FOTO (GRID FOTO UPLOAD WEB) -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>📚 History Request Foto</h3>
                 </div>
                 <div class="history-grid" id="historyGrid"></div>
             </div>
@@ -398,6 +397,8 @@
     const API_URL = "https://conservative-irc-returning-thereof.trycloudflare.com";
 
     let syncInterval = null;
+    let loadedInitial = false;
+    let seenIds = JSON.parse(localStorage.getItem('seen_ids') || '[]');
 
     const getBaseUrl = () => {
         if (!API_URL || API_URL.includes("TARUH-LINK-CLOUDFLARE-DISINI")) {
@@ -405,6 +406,42 @@
         }
         return API_URL.replace(/\/$/, "");
     };
+
+    // AUTO-LOGIN & AUTO-LOAD HISTORY DARI LOCALSTORAGE SAAT WEB DIBUKA/DI-REFRESH
+    window.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            showDashboard();
+        }
+    });
+
+    function showDashboard() {
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('dashboardSection').classList.remove('hidden');
+        
+        // Load cache history request & hasil generate yang tersimpan lokal lebih dulu
+        loadLocalHistory();
+
+        fetchHistory();
+        if (!syncInterval) {
+            syncInterval = setInterval(fetchHistory, 3000);
+        }
+    }
+
+    function loadLocalHistory() {
+        const localData = localStorage.getItem('app_history');
+        if (localData) {
+            try {
+                const parsed = JSON.parse(localData);
+                renderDashboard(parsed);
+            } catch (e) {
+                console.error("Error load local cache:", e);
+            }
+        }
+    }
+
+    function saveLocalHistory(data) {
+        localStorage.setItem('app_history', JSON.stringify(data));
+    }
 
     async function handleLogin() {
         const user = document.getElementById('usernameInput').value;
@@ -422,16 +459,8 @@
 
             if (data.success) {
                 status.textContent = "";
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('dashboardSection').classList.remove('hidden');
-                document.getElementById('titleHeader').textContent = "Generate Thema Qr";
-                
-                fetchHistory();
-                checkQrisStatus();
-                syncInterval = setInterval(() => {
-                    fetchHistory();
-                    checkQrisStatus();
-                }, 3000);
+                localStorage.setItem('isLoggedIn', 'true');
+                showDashboard();
             } else {
                 status.textContent = data.message;
             }
@@ -441,10 +470,13 @@
     }
 
     function handleLogout() {
-        if (syncInterval) clearInterval(syncInterval);
+        localStorage.removeItem('isLoggedIn');
+        if (syncInterval) {
+            clearInterval(syncInterval);
+            syncInterval = null;
+        }
         document.getElementById('loginSection').classList.remove('hidden');
         document.getElementById('dashboardSection').classList.add('hidden');
-        document.getElementById('titleHeader').textContent = "Login System";
         document.getElementById('usernameInput').value = "";
         document.getElementById('passwordInput').value = "";
     }
@@ -454,15 +486,14 @@
         
         const imageFiles = document.getElementById('imageInput').files;
         const caption = document.getElementById('captionInput').value;
-        const statusDiv = document.getElementById('sendStatus');
         const sendBtn = document.getElementById('sendBtn');
+        const notifBox = document.getElementById('notifBox');
 
         if (imageFiles.length === 0) return;
 
         sendBtn.disabled = true;
-        sendBtn.textContent = `Mengirim ${imageFiles.length} Foto...`;
-        statusDiv.className = "status";
-        statusDiv.textContent = "";
+        sendBtn.textContent = "Mengirim...";
+        notifBox.classList.add('hidden');
 
         const formData = new FormData();
         for (let i = 0; i < imageFiles.length; i++) {
@@ -479,128 +510,183 @@
             const data = await res.json();
 
             if (data.success) {
-                statusDiv.className = "status success";
-                statusDiv.textContent = data.message;
+                notifBox.className = "alert-box";
+                notifBox.innerHTML = `✅ <strong>${imageFiles.length} foto berhasil dikirim!</strong><br>Harap tunggu proses pembuatan Tema QR Code (estimasi <strong>5 - 10 menit</strong>).`;
+                notifBox.classList.remove('hidden');
+
                 document.getElementById('uploadForm').reset();
                 fetchHistory();
             } else {
                 throw new Error(data.message);
             }
         } catch (err) {
-            statusDiv.className = "status error";
-            statusDiv.textContent = "Error: " + err.message;
+            notifBox.className = "status-msg error";
+            notifBox.textContent = "Error: " + err.message;
+            notifBox.classList.remove('hidden');
         } finally {
             sendBtn.disabled = false;
             sendBtn.textContent = "Membuat";
         }
     });
 
-    async function checkQrisStatus() {
-        try {
-            const res = await fetch(`${getBaseUrl()}/api/qris-status`);
-            const data = await res.json();
-            const noticeBox = document.getElementById('noticeBox');
-            const noticeIcon = document.getElementById('noticeIcon');
-            const noticeContent = document.getElementById('noticeContent');
-
-            if (data.ready) {
-                noticeBox.className = "notice-box success";
-                noticeIcon.textContent = "✅";
-                
-                let html = `<strong>Status:</strong> ${data.message}`;
-                if (data.imageUrl) {
-                    const fullImgUrl = data.imageUrl.startsWith('http') ? data.imageUrl : `${getBaseUrl()}${data.imageUrl}`;
-                    html += `<br><img src="${fullImgUrl}" class="qris-preview" alt="QRIS">`;
-                }
-                noticeContent.innerHTML = html;
-            } else {
-                noticeBox.className = "notice-box";
-                noticeIcon.textContent = "⏳";
-                noticeContent.innerHTML = `<strong>Pemberitahuan:</strong> Harap tunggu proses Pembuatan Thema QR Code, biasanya memakan waktu sekitar <strong>5 - 10 menit</strong>.`;
-            }
-        } catch (e) {
-            console.error("Gagal mengambil status QRIS:", e);
-        }
-    }
-
     async function fetchHistory() {
         try {
             const res = await fetch(`${getBaseUrl()}/api/history`);
             const data = await res.json();
-            renderHistory(data);
+            
+            // Simpan ke LocalStorage agar riwayat request & hasil tersimpan aman
+            saveLocalHistory(data);
+            renderDashboard(data);
         } catch (e) {
-            console.error("Gagal mengambil history:", e);
+            console.warn("Server offline/unreachable, memuat dari local cache...", e);
+            loadLocalHistory();
         }
     }
 
     async function deleteHistory(id) {
-        if (!confirm("Apakah Anda yakin ingin menghapus history ini?")) return;
+        if (!confirm("Apakah Anda yakin ingin menghapus foto ini?")) return;
 
         try {
-            const res = await fetch(`${getBaseUrl()}/api/history/${id}`, {
-                method: 'DELETE'
-            });
+            const res = await fetch(`${getBaseUrl()}/api/history/${id}`, { method: 'DELETE' });
             const data = await res.json();
-            if (data.success) {
-                fetchHistory();
-            } else {
-                alert("Gagal menghapus: " + data.message);
-            }
+            if (data.success) fetchHistory();
         } catch (e) {
-            alert("Error saat menghapus history!");
+            // Hapus dari local storage jika offline
+            const localData = localStorage.getItem('app_history');
+            if (localData) {
+                let parsed = JSON.parse(localData);
+                parsed = parsed.filter(item => item.id !== id);
+                saveLocalHistory(parsed);
+                renderDashboard(parsed);
+            }
         }
     }
 
-    function renderHistory(history) {
-        const grid = document.getElementById('historyGrid');
-        grid.innerHTML = "";
-        
+    function dismissBigCard(id) {
+        if (!seenIds.includes(id)) {
+            seenIds.push(id);
+            localStorage.setItem('seen_ids', JSON.stringify(seenIds));
+        }
+        fetchHistory();
+    }
+
+    function renderDashboard(history) {
+        const outputContainer = document.getElementById('outputContainer');
+        const historyHasilGrid = document.getElementById('historyHasilGrid');
+        const historyGrid = document.getElementById('historyGrid');
+
+        outputContainer.innerHTML = "";
+        historyHasilGrid.innerHTML = "";
+        historyGrid.innerHTML = "";
+
         if (!history || history.length === 0) {
-            grid.innerHTML = "<p style='font-size: 0.8rem; color: #94a3b8; grid-column: 1/-1;'>Belum ada history gambar.</p>";
+            outputContainer.innerHTML = `
+                <div class="result-card">
+                    <span class="badge-status-yellow">⏳ Belum Ada Hasil Generate</span>
+                    <p style="font-size:0.8rem; color:#64748b; margin-top:6px;">Silakan upload foto terlebih dahulu.</p>
+                </div>
+            `;
+            historyHasilGrid.innerHTML = "<p style='font-size:0.75rem; color:#94a3b8; grid-column:1/-1;'>Belum ada history hasil generate.</p>";
+            historyGrid.innerHTML = "<p style='font-size:0.75rem; color:#94a3b8; grid-column:1/-1;'>Belum ada history request.</p>";
             return;
         }
 
-        history.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'history-item';
-            
-            const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
-            const isTelegram = item.source === 'telegram';
+        const hasilList = history.filter(item => item.source === 'telegram');
+        const requestList = history.filter(item => item.source === 'web');
 
-            // Mengubah badge "TELEGRAM" menjadi "HASIL QR"
-            const badgeClass = isTelegram ? 'badge-hasil' : 'badge-request';
-            const badgeLabel = isTelegram ? 'HASIL QR' : 'REQUEST';
+        // Saat di-refresh, foto besar hasil generate disembunyikan dan langsung masuk ke History Hasil Generate
+        if (!loadedInitial && hasilList.length > 0) {
+            hasilList.forEach(item => {
+                if (!seenIds.includes(item.id)) {
+                    seenIds.push(item.id);
+                }
+            });
+            localStorage.setItem('seen_ids', JSON.stringify(seenIds));
+            loadedInitial = true;
+        }
 
-            const isPending = item.status === 'pending';
-            const statusClass = isPending ? 'status-box-pending' : 'status-box-completed';
-            const statusText = item.statusText || (isPending ? '⏳ Tema sedang dibuat, mohon tunggu' : '✅ Tema QRIS telah dibuat');
+        const newHasilList = hasilList.filter(item => !seenIds.includes(item.id));
 
-            let downloadBtn = '';
-            if (isTelegram) {
-                downloadBtn = `<a href="${fullImgUrl}" download target="_blank" class="btn-act btn-download">📥 Download</a>`;
+        // 1. DOKUMEN / FOTO BESAR DI ATAS HANYA MUNCUL KETIKA ADA HASIL BARU SEBELUM WEB DI-REFRESH
+        if (newHasilList.length > 0) {
+            newHasilList.forEach(item => {
+                const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
+                const captionText = item.caption || "Foto dari Telegram";
+
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <div class="badge-status-green">✅ Tema QRIS Baru Dibuat</div>
+                    <div class="caption-title">"${captionText}"</div>
+                    <img src="${fullImgUrl}" alt="Hasil QR Code">
+                    <div class="action-row">
+                        <a href="${fullImgUrl}" download target="_blank" class="btn-act-main btn-download-main">📥 Download</a>
+                        <button onclick="dismissBigCard('${item.id}')" class="btn-act-main btn-delete-main">🗑️ Sembunyikan</button>
+                    </div>
+                `;
+                outputContainer.appendChild(card);
+            });
+        } else {
+            const isPending = history.some(item => item.source === 'web' && item.status === 'pending');
+            if (isPending) {
+                outputContainer.innerHTML = `
+                    <div class="result-card">
+                        <div class="badge-status-yellow">⏳ Sedang Dalam Proses</div>
+                        <p style="font-size:0.8rem; color:#64748b; margin-top:6px;">Harap tunggu proses pembuatan Tema QR Code (estimasi 5 - 10 menit).</p>
+                    </div>
+                `;
+            } else {
+                outputContainer.innerHTML = `
+                    <div class="result-card">
+                        <span class="badge-status-yellow">✨ Siap Generate QR Code</span>
+                        <p style="font-size:0.8rem; color:#64748b; margin-top:6px;">Hasil sebelumnya tersimpan di <strong>History Hasil Generate</strong> di bawah.</p>
+                    </div>
+                `;
             }
+        }
 
-            div.innerHTML = `
-                <img src="${fullImgUrl}" alt="Foto" onclick="window.open('${fullImgUrl}', '_blank')">
-                <div class="info">
-                    <div>
-                        <p title="${item.caption}">${item.caption}</p>
-                        <div class="badge-container">
-                            <span class="badge ${badgeClass}">${badgeLabel}</span>
-                            <span class="time-text">${item.time || ''}</span>
+        // 2. TAMPILKAN SEMUA HASIL GENERATE DI GALERI GRID (HISTORY HASIL GENERATE)
+        if (hasilList.length === 0) {
+            historyHasilGrid.innerHTML = "<p style='font-size:0.75rem; color:#94a3b8; grid-column:1/-1;'>Belum ada history hasil generate.</p>";
+        } else {
+            hasilList.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
+
+                div.innerHTML = `
+                    <img src="${fullImgUrl}" alt="Hasil QR" onclick="window.open('${fullImgUrl}', '_blank')">
+                    <div class="info">
+                        <p title="${item.caption}">🎨 QR Result</p>
+                        <div style="display:flex; gap:4px; margin-top:4px;">
+                            <a href="${fullImgUrl}" download target="_blank" style="flex:1; text-align:center; background:#0f172a; color:#ffffff; font-size:0.65rem; padding:4px; border-radius:4px; text-decoration:none; font-weight:600;">📥</a>
+                            <button onclick="deleteHistory('${item.id}')" class="btn-delete-sm" style="flex:1; margin-top:0;">🗑️</button>
                         </div>
                     </div>
-                    
-                    <div class="${statusClass}">${statusText}</div>
+                `;
+                historyHasilGrid.appendChild(div);
+            });
+        }
 
-                    <div class="action-btns">
-                        ${downloadBtn}
-                        <button onclick="deleteHistory('${item.id}')" class="btn-act btn-delete">🗑️ Hapus</button>
+        // 3. TAMPILKAN HISTORY REQUEST FOTO (Tersimpan di Local Storage & Web Sync)
+        if (requestList.length === 0) {
+            historyGrid.innerHTML = "<p style='font-size:0.75rem; color:#94a3b8; grid-column:1/-1;'>Belum ada request foto.</p>";
+        } else {
+            requestList.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
+
+                div.innerHTML = `
+                    <img src="${fullImgUrl}" alt="Foto Request" onclick="window.open('${fullImgUrl}', '_blank')">
+                    <div class="info">
+                        <p title="${item.caption}">📤 Request</p>
+                        <button onclick="deleteHistory('${item.id}')" class="btn-delete-sm">Hapus</button>
                     </div>
-                </div>
-            `;
-            grid.appendChild(div);
-        });
+                `;
+                historyGrid.appendChild(div);
+            });
+        }
     }
 </script>
 
