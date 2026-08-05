@@ -85,6 +85,30 @@
             box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
         }
 
+        /* PRATINJAU FOTO / IMAGE PREVIEW */
+        .preview-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 75px;
+            height: 75px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .btn {
             width: 100%;
             padding: 12px;
@@ -350,6 +374,8 @@
                 <div class="form-group">
                     <label>Pilih Foto (Bisa Kirim Banyak/3 Foto)</label>
                     <input type="file" id="imageInput" accept="image/*" multiple required>
+                    <!-- CONTAINER PRATINJAU FOTO -->
+                    <div id="imagePreviewContainer" class="preview-container"></div>
                 </div>
                 <div class="form-group">
                     <label>Pesan / Teks Caption</label>
@@ -407,7 +433,29 @@
         return API_URL.replace(/\/$/, "");
     };
 
-    // AUTO-LOGIN & AUTO-LOAD HISTORY DARI LOCALSTORAGE SAAT WEB DIBUKA/DI-REFRESH
+    // EVENT LISTENER UNTUK MENAMPILKAN PRATINJAU FOTO SEBELUM DI-UPLOAD
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        previewContainer.innerHTML = '';
+
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        const div = document.createElement('div');
+                        div.className = 'preview-item';
+                        div.innerHTML = `<img src="${evt.target.result}" alt="Preview Foto">`;
+                        previewContainer.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+
+    // AUTO-LOGIN & LOAD CACHE LOCALSTORAGE SAAT WEB DIBUKA
     window.addEventListener('DOMContentLoaded', () => {
         if (localStorage.getItem('isLoggedIn') === 'true') {
             showDashboard();
@@ -418,9 +466,7 @@
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboardSection').classList.remove('hidden');
         
-        // Load cache history request & hasil generate yang tersimpan lokal lebih dulu
         loadLocalHistory();
-
         fetchHistory();
         if (!syncInterval) {
             syncInterval = setInterval(fetchHistory, 3000);
@@ -514,7 +560,10 @@
                 notifBox.innerHTML = `✅ <strong>${imageFiles.length} foto berhasil dikirim!</strong><br>Harap tunggu proses pembuatan Tema QR Code (estimasi <strong>5 - 10 menit</strong>).`;
                 notifBox.classList.remove('hidden');
 
+                // RESET FORM & KOSONGKAN PREVIEW FOTO
                 document.getElementById('uploadForm').reset();
+                document.getElementById('imagePreviewContainer').innerHTML = '';
+                
                 fetchHistory();
             } else {
                 throw new Error(data.message);
@@ -534,11 +583,10 @@
             const res = await fetch(`${getBaseUrl()}/api/history`);
             const data = await res.json();
             
-            // Simpan ke LocalStorage agar riwayat request & hasil tersimpan aman
             saveLocalHistory(data);
             renderDashboard(data);
         } catch (e) {
-            console.warn("Server offline/unreachable, memuat dari local cache...", e);
+            console.warn("Server offline, memuat dari local cache...", e);
             loadLocalHistory();
         }
     }
@@ -551,7 +599,6 @@
             const data = await res.json();
             if (data.success) fetchHistory();
         } catch (e) {
-            // Hapus dari local storage jika offline
             const localData = localStorage.getItem('app_history');
             if (localData) {
                 let parsed = JSON.parse(localData);
@@ -594,7 +641,6 @@
         const hasilList = history.filter(item => item.source === 'telegram');
         const requestList = history.filter(item => item.source === 'web');
 
-        // Saat di-refresh, foto besar hasil generate disembunyikan dan langsung masuk ke History Hasil Generate
         if (!loadedInitial && hasilList.length > 0) {
             hasilList.forEach(item => {
                 if (!seenIds.includes(item.id)) {
@@ -607,7 +653,6 @@
 
         const newHasilList = hasilList.filter(item => !seenIds.includes(item.id));
 
-        // 1. DOKUMEN / FOTO BESAR DI ATAS HANYA MUNCUL KETIKA ADA HASIL BARU SEBELUM WEB DI-REFRESH
         if (newHasilList.length > 0) {
             newHasilList.forEach(item => {
                 const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
@@ -645,7 +690,6 @@
             }
         }
 
-        // 2. TAMPILKAN SEMUA HASIL GENERATE DI GALERI GRID (HISTORY HASIL GENERATE)
         if (hasilList.length === 0) {
             historyHasilGrid.innerHTML = "<p style='font-size:0.75rem; color:#94a3b8; grid-column:1/-1;'>Belum ada history hasil generate.</p>";
         } else {
@@ -668,7 +712,6 @@
             });
         }
 
-        // 3. TAMPILKAN HISTORY REQUEST FOTO (Tersimpan di Local Storage & Web Sync)
         if (requestList.length === 0) {
             historyGrid.innerHTML = "<p style='font-size:0.75rem; color:#94a3b8; grid-column:1/-1;'>Belum ada request foto.</p>";
         } else {
