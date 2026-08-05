@@ -149,7 +149,7 @@
             line-height: 1.4;
         }
 
-        /* OUTPUT GENERATE SECTION (BESAR) */
+        /* OUTPUT GENERATE SECTION (HORIZONTAL SLIDER GESER) */
         .output-section {
             margin-top: 22px;
             border-top: 1px dashed #cbd5e1;
@@ -168,8 +168,22 @@
 
         .output-container-list {
             display: flex;
-            flex-direction: column;
-            gap: 14px;
+            flex-direction: row;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .output-container-list::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .output-container-list::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
         }
 
         .result-card {
@@ -180,6 +194,9 @@
             text-align: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.03);
             width: 100%;
+            min-width: 100%;
+            flex: 0 0 100%;
+            scroll-snap-align: start;
         }
 
         .badge-status-green {
@@ -255,7 +272,7 @@
             border: 1px solid #fee2e2;
         }
 
-        /* HISTORY SECTIONS */
+        /* HISTORY SECTIONS (LAYOUT HORIZONTAL SLIDER) */
         .history-section {
             margin-top: 20px;
             border-top: 1px solid #f1f5f9;
@@ -284,10 +301,25 @@
             margin-right: 4px;
         }
 
+        /* CONTAINER GRID DIUBAH MENJADI FLEX HORIZONTAL GESER */
         .history-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .history-grid::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .history-grid::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
         }
 
         .history-item {
@@ -297,11 +329,14 @@
             background: #ffffff;
             display: flex;
             flex-direction: column;
+            flex: 0 0 calc(25% - 6px); /* Mengatur 4 item horizontal pada layar */
+            min-width: 100px;
+            scroll-snap-align: start;
         }
 
         .history-item img {
             width: 100%;
-            height: 85px;
+            height: 80px;
             object-fit: cover;
             cursor: pointer;
         }
@@ -315,7 +350,7 @@
         }
 
         .history-item p {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: #334155;
             white-space: nowrap;
             overflow: hidden;
@@ -372,7 +407,7 @@
             <!-- FORM INPUT -->
             <form id="uploadForm">
                 <div class="form-group">
-                    <label>Pilih Foto (Bisa Kirim Banyak/3 Foto)</label>
+                    <label>Pilih Foto Qris Yang ingin di jdikan tema</label>
                     <input type="file" id="imageInput" accept="image/*" multiple required>
                     <!-- CONTAINER PRATINJAU FOTO -->
                     <div id="imagePreviewContainer" class="preview-container"></div>
@@ -387,7 +422,7 @@
             <!-- NOTIFIKASI SETELAH MENGIRIM -->
             <div id="notifBox" class="hidden"></div>
 
-            <!-- HASIL GENERATE UTAMA (TAMPILAN FOTO BESAR TERBARU) -->
+            <!-- HASIL GENERATE UTAMA (GESER HORIZONTAL) -->
             <div class="output-section">
                 <div class="output-header">
                     <span>✨ Hasil Generate Baru</span>
@@ -398,7 +433,7 @@
                 <div id="outputContainer" class="output-container-list"></div>
             </div>
 
-            <!-- HISTORY HASIL GENERATE QR (GRID FOTO DARI TELEGRAM) -->
+            <!-- HISTORY HASIL GENERATE QR (GESER HORIZONTAL) -->
             <div class="history-section">
                 <div class="history-header">
                     <h3>🎨 History Hasil Generate QR</h3>
@@ -406,7 +441,7 @@
                 <div class="history-grid" id="historyHasilGrid"></div>
             </div>
 
-            <!-- HISTORY REQUEST FOTO (GRID FOTO UPLOAD WEB) -->
+            <!-- HISTORY REQUEST FOTO (GESER HORIZONTAL) -->
             <div class="history-section">
                 <div class="history-header">
                     <h3>📚 History Request Foto</h3>
@@ -420,7 +455,7 @@
 </div>
 
 <script>
-    const API_URL = "https://conservative-irc-returning-thereof.trycloudflare.com";
+    const API_URL = "https://cologne-parade-projects-reservations.trycloudflare.com";
 
     let syncInterval = null;
     let loadedInitial = false;
@@ -560,7 +595,6 @@
                 notifBox.innerHTML = `✅ <strong>${imageFiles.length} foto berhasil dikirim!</strong><br>Harap tunggu proses pembuatan Tema QR Code (estimasi <strong>5 - 10 menit</strong>).`;
                 notifBox.classList.remove('hidden');
 
-                // RESET FORM & KOSONGKAN PREVIEW FOTO
                 document.getElementById('uploadForm').reset();
                 document.getElementById('imagePreviewContainer').innerHTML = '';
                 
@@ -656,7 +690,7 @@
         if (newHasilList.length > 0) {
             newHasilList.forEach(item => {
                 const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
-                const captionText = item.caption || "Foto dari Telegram";
+                const captionText = item.caption || "Theme telah dibuat";
 
                 const card = document.createElement('div');
                 card.className = 'result-card';
