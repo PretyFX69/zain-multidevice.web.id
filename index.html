@@ -61,19 +61,36 @@
             background-color: #fffbeb;
             border: 1px solid #fde68a;
             color: #b45309;
-            padding: 12px 16px;
+            padding: 14px 16px;
             border-radius: 10px;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             margin-bottom: 20px;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            align-items: flex-start;
+            gap: 12px;
             line-height: 1.4;
+            transition: all 0.3s ease;
+        }
+
+        .notice-box.success {
+            background-color: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #166534;
         }
 
         .notice-box .icon {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             flex-shrink: 0;
+        }
+
+        .qris-preview {
+            width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
         }
 
         .form-group {
@@ -231,29 +248,38 @@
         }
 
         .badge-web { background-color: #e0f2fe; color: #0369a1; }
-        .badge-tg { background-color: #f0fdf4; color: #15803d; }
 
         .time-text {
             font-size: 0.62rem;
             color: #94a3b8;
         }
 
-        .btn-download {
+        .status-box-pending {
             display: block;
             text-align: center;
-            background-color: #0f172a;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 6px;
+            background-color: #fffbeb;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            padding: 6px 4px;
             border-radius: 6px;
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             font-weight: 600;
             margin-top: 8px;
-            transition: background 0.2s;
+            line-height: 1.3;
         }
 
-        .btn-download:hover {
-            background-color: #334155;
+        .status-box-completed {
+            display: block;
+            text-align: center;
+            background-color: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            padding: 6px 4px;
+            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            margin-top: 8px;
+            line-height: 1.3;
         }
 
         .status {
@@ -271,7 +297,7 @@
 
 <div class="container">
     <div class="header">
-        <h2 id="titleHeader">Login System</h2>
+        <h2 id="titleHeader">Generate Theme Qris</h2>
         <p>moded by Pretvfx</p>
     </div>
 
@@ -293,9 +319,10 @@
         <!-- DASHBOARD PANEL -->
         <div id="dashboardSection" class="hidden">
             
-            <div class="notice-box">
-                <span class="icon">⏳</span>
-                <div>
+            <!-- NOTICE STATUS QRIS AUTOMATIC -->
+            <div class="notice-box" id="noticeBox">
+                <span class="icon" id="noticeIcon">⏳</span>
+                <div id="noticeContent">
                     <strong>Pemberitahuan:</strong> Harap tunggu proses QR Code, biasanya memakan waktu sekitar <strong>5 - 10 menit</strong>.
                 </div>
             </div>
@@ -307,9 +334,9 @@
                 </div>
                 <div class="form-group">
                     <label>Pesan / Teks Caption</label>
-                    <textarea id="captionInput" rows="3" placeholder="Tulis pesan ke Telegram..."></textarea>
+                    <textarea id="captionInput" rows="3" placeholder="Request Theme"></textarea>
                 </div>
-                <button type="submit" class="btn" id="sendBtn">Kirim ke Telegram</button>
+                <button type="submit" class="btn" id="sendBtn">Membuat</button>
             </form>
             
             <div id="sendStatus" class="status"></div>
@@ -332,18 +359,16 @@
 
 <script>
     // =========================================================================
-    // PASTE / MANUSIALKAN URL CLOUDFLARE KAMU DI BAWAH INI:
-    // (Misal: "https://xxxx-xxxx-xxxx.trycloudflare.com")
+    // PASTE URL CLOUDFLARE TUNNEL DI BAWAH INI (Satu tempat saja):
     // =========================================================================
-    const API_URL = "https://ocean-justin-imports-cast.trycloudflare.com";
+    const API_URL = "https://compatibility-bicycle-relates-computed.trycloudflare.com";
     // =========================================================================
 
     let syncInterval = null;
 
-    // Menyesuaikan format URL dasar
     const getBaseUrl = () => {
         if (!API_URL || API_URL.includes("TARUH-LINK-CLOUDFLARE-DISINI")) {
-            return window.location.origin; // Otomatis memakai domain saat ini jika belum diisi
+            return window.location.origin;
         }
         return API_URL.replace(/\/$/, "");
     };
@@ -366,10 +391,14 @@
                 status.textContent = "";
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('dashboardSection').classList.remove('hidden');
-                document.getElementById('titleHeader').textContent = "Dashboard Panel";
+                document.getElementById('titleHeader').textContent = "Generate Thema Qr";
                 
                 fetchHistory();
-                syncInterval = setInterval(fetchHistory, 3000);
+                checkQrisStatus();
+                syncInterval = setInterval(() => {
+                    fetchHistory();
+                    checkQrisStatus();
+                }, 3000);
             } else {
                 status.textContent = data.message;
             }
@@ -429,9 +458,37 @@
             statusDiv.textContent = "Error: " + err.message;
         } finally {
             sendBtn.disabled = false;
-            sendBtn.textContent = "Kirim ke Telegram";
+            sendBtn.textContent = "Membuat";
         }
     });
+
+    async function checkQrisStatus() {
+        try {
+            const res = await fetch(`${getBaseUrl()}/api/qris-status`);
+            const data = await res.json();
+            const noticeBox = document.getElementById('noticeBox');
+            const noticeIcon = document.getElementById('noticeIcon');
+            const noticeContent = document.getElementById('noticeContent');
+
+            if (data.ready) {
+                noticeBox.className = "notice-box success";
+                noticeIcon.textContent = "✅";
+                
+                let html = `<strong>Status:</strong> ${data.message}`;
+                if (data.imageUrl) {
+                    const fullImgUrl = data.imageUrl.startsWith('http') ? data.imageUrl : `${getBaseUrl()}${data.imageUrl}`;
+                    html += `<br><img src="${fullImgUrl}" class="qris-preview" alt="QRIS">`;
+                }
+                noticeContent.innerHTML = html;
+            } else {
+                noticeBox.className = "notice-box";
+                noticeIcon.textContent = "⏳";
+                noticeContent.innerHTML = `<strong>Pemberitahuan:</strong> Harap tunggu proses Pembuatan Thema QR Code, biasanya memakan waktu sekitar <strong>5 - 10 menit</strong>.`;
+            }
+        } catch (e) {
+            console.error("Gagal mengambil status QRIS:", e);
+        }
+    }
 
     async function fetchHistory() {
         try {
@@ -456,10 +513,11 @@
             const div = document.createElement('div');
             div.className = 'history-item';
             
-            const isWeb = item.source === 'web';
-            const badgeClass = isWeb ? 'badge-web' : 'badge-tg';
-            const badgeText = isWeb ? 'WEB' : 'TELEGRAM';
             const fullImgUrl = item.url.startsWith('http') ? item.url : `${getBaseUrl()}${item.url}`;
+
+            const isPending = item.status === 'pending' || !item.status;
+            const statusClass = isPending ? 'status-box-pending' : 'status-box-completed';
+            const statusText = item.statusText || (isPending ? '⏳ Tema sedang dibuat, mohon tunggu' : '✅ Tema QRIS telah dibuat');
 
             div.innerHTML = `
                 <img src="${fullImgUrl}" alt="Foto" onclick="window.open('${fullImgUrl}', '_blank')">
@@ -467,11 +525,11 @@
                     <div>
                         <p title="${item.caption}">${item.caption}</p>
                         <div class="badge-container">
-                            <span class="badge ${badgeClass}">${badgeText}</span>
+                            <span class="badge badge-web">WEB</span>
                             <span class="time-text">${item.time || ''}</span>
                         </div>
                     </div>
-                    <a href="${fullImgUrl}" download="foto_${item.id}.jpg" class="btn-download">📥 Download</a>
+                    <div class="${statusClass}">${statusText}</div>
                 </div>
             `;
             grid.appendChild(div);
