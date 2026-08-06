@@ -24,7 +24,7 @@
 
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 20px;
@@ -68,7 +68,7 @@
             color: #334155;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 12px;
             border: 1px solid #cbd5e1;
@@ -80,12 +80,11 @@
             transition: all 0.2s;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             border-color: #0f172a;
             box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
         }
 
-        /* PRATINJAU FOTO / IMAGE PREVIEW */
         .preview-container {
             display: flex;
             gap: 10px;
@@ -135,7 +134,6 @@
 
         .hidden { display: none !important; }
 
-        /* NOTIFIKASI SUKSES KIRIM */
         .alert-box {
             background-color: #f0fdf4;
             border: 1px solid #bbf7d0;
@@ -149,7 +147,87 @@
             line-height: 1.4;
         }
 
-        /* OUTPUT GENERATE SECTION (HORIZONTAL SLIDER GESER) */
+        /* MANAJEMEN AKSES AKUN */
+        .access-section {
+            margin-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 18px;
+        }
+
+        .access-section h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .access-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            text-align: left;
+        }
+
+        .access-table th, .access-table td {
+            padding: 8px 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .access-table th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+        }
+
+        .badge-role-owner {
+            color: #1d4ed8;
+            background: #dbeafe;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .badge-role-member {
+            color: #475569;
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .badge-expired {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            color: #166534;
+            background: #f0fdf4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
         .output-section {
             margin-top: 22px;
             border-top: 1px dashed #cbd5e1;
@@ -177,14 +255,8 @@
             scrollbar-width: thin;
         }
 
-        .output-container-list::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .output-container-list::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
+        .output-container-list::-webkit-scrollbar { height: 4px; }
+        .output-container-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
         .result-card {
             background: #ffffff;
@@ -239,7 +311,6 @@
             border: 1px solid #f1f5f9;
         }
 
-        /* TOMBOL AKSI UTAMA */
         .action-row {
             display: flex;
             gap: 8px;
@@ -272,7 +343,6 @@
             border: 1px solid #fee2e2;
         }
 
-        /* HISTORY SECTIONS (LAYOUT HORIZONTAL SLIDER) */
         .history-section {
             margin-top: 20px;
             border-top: 1px solid #f1f5f9;
@@ -301,7 +371,6 @@
             margin-right: 4px;
         }
 
-        /* CONTAINER GRID DIUBAH MENJADI FLEX HORIZONTAL GESER */
         .history-grid {
             display: flex;
             flex-direction: row;
@@ -313,14 +382,8 @@
             scrollbar-width: thin;
         }
 
-        .history-grid::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .history-grid::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
+        .history-grid::-webkit-scrollbar { height: 4px; }
+        .history-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
         .history-item {
             border: 1px solid #e2e8f0;
@@ -329,7 +392,7 @@
             background: #ffffff;
             display: flex;
             flex-direction: column;
-            flex: 0 0 calc(25% - 6px); /* Mengatur 4 item horizontal pada layar */
+            flex: 0 0 calc(25% - 6px);
             min-width: 100px;
             scroll-snap-align: start;
         }
@@ -383,7 +446,7 @@
 <div class="container">
     <div class="header">
         <h2 id="titleHeader">Generate Thema Qr</h2>
-        <p>moded by Pretvfx</p>
+        <p>moded by Kingz Store</p>
     </div>
 
     <div class="content">
@@ -404,12 +467,11 @@
         <!-- DASHBOARD SECTION -->
         <div id="dashboardSection" class="hidden">
             
-            <!-- FORM INPUT -->
+            <!-- FORM INPUT GENERATE -->
             <form id="uploadForm">
                 <div class="form-group">
                     <label>Pilih Foto Qris Yang ingin di jdikan tema</label>
                     <input type="file" id="imageInput" accept="image/*" multiple required>
-                    <!-- CONTAINER PRATINJAU FOTO -->
                     <div id="imagePreviewContainer" class="preview-container"></div>
                 </div>
                 <div class="form-group">
@@ -422,7 +484,7 @@
             <!-- NOTIFIKASI SETELAH MENGIRIM -->
             <div id="notifBox" class="hidden"></div>
 
-            <!-- HASIL GENERATE UTAMA (GESER HORIZONTAL) -->
+            <!-- HASIL GENERATE UTAMA -->
             <div class="output-section">
                 <div class="output-header">
                     <span>✨ Hasil Generate Baru</span>
@@ -433,7 +495,7 @@
                 <div id="outputContainer" class="output-container-list"></div>
             </div>
 
-            <!-- HISTORY HASIL GENERATE QR (GESER HORIZONTAL) -->
+            <!-- HISTORY HASIL GENERATE QR -->
             <div class="history-section">
                 <div class="history-header">
                     <h3>🎨 History Hasil Generate QR</h3>
@@ -441,12 +503,65 @@
                 <div class="history-grid" id="historyHasilGrid"></div>
             </div>
 
-            <!-- HISTORY REQUEST FOTO (GESER HORIZONTAL) -->
+            <!-- HISTORY REQUEST FOTO -->
             <div class="history-section">
                 <div class="history-header">
                     <h3>📚 History Request Foto</h3>
                 </div>
                 <div class="history-grid" id="historyGrid"></div>
+            </div>
+
+            <!-- MANAJEMEN AKSES AKUN (HANYA MUNCUL DILOGIN ROLE KEPEMILIKAN) -->
+            <div id="accessManagementSection" class="access-section hidden">
+                <h3>🔑 Kelola Akses Akun</h3>
+                
+                <form id="addAccountForm" onsubmit="handleAddAccount(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="accUsername" placeholder="User Baru" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" id="accPassword" placeholder="PW" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Akses Peran (Role)</label>
+                            <select id="accRole" required>
+                                <option value="member">Member</option>
+                                <option value="kepemilikan">Kepemilikan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Durasi Akses (Hari)</label>
+                            <input type="number" id="accDuration" placeholder="30" min="1" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn" style="background-color: #2563eb;">+ Tambah Akses</button>
+                </form>
+
+                <!-- TABEL AKSES -->
+                <div class="table-responsive">
+                    <table class="access-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>PW</th>
+                                <th>Role</th>
+                                <th>Kedaluwarsa</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align:center;">Memuat data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <button class="btn btn-logout" onclick="handleLogout()">Logout</button>
@@ -455,7 +570,7 @@
 </div>
 
 <script>
-    const API_URL = "https://cologne-parade-projects-reservations.trycloudflare.com";
+    const API_URL = "https://zshops-star-possession-carb.trycloudflare.com";
 
     let syncInterval = null;
     let loadedInitial = false;
@@ -468,7 +583,6 @@
         return API_URL.replace(/\/$/, "");
     };
 
-    // EVENT LISTENER UNTUK MENAMPILKAN PRATINJAU FOTO SEBELUM DI-UPLOAD
     document.getElementById('imageInput').addEventListener('change', function(e) {
         const previewContainer = document.getElementById('imagePreviewContainer');
         previewContainer.innerHTML = '';
@@ -490,7 +604,6 @@
         }
     });
 
-    // AUTO-LOGIN & LOAD CACHE LOCALSTORAGE SAAT WEB DIBUKA
     window.addEventListener('DOMContentLoaded', () => {
         if (localStorage.getItem('isLoggedIn') === 'true') {
             showDashboard();
@@ -501,6 +614,17 @@
         document.getElementById('loginSection').classList.add('hidden');
         document.getElementById('dashboardSection').classList.remove('hidden');
         
+        const userRole = localStorage.getItem('userRole') || 'member';
+        const accessSec = document.getElementById('accessManagementSection');
+
+        // Pengecekan Peran: Kepemilikan bisa mengelola akses, Member tidak
+        if (userRole === 'kepemilikan') {
+            accessSec.classList.remove('hidden');
+            fetchAccounts();
+        } else {
+            accessSec.classList.add('hidden');
+        }
+
         loadLocalHistory();
         fetchHistory();
         if (!syncInterval) {
@@ -541,6 +665,7 @@
             if (data.success) {
                 status.textContent = "";
                 localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userRole', data.role);
                 showDashboard();
             } else {
                 status.textContent = data.message;
@@ -552,6 +677,7 @@
 
     function handleLogout() {
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userRole');
         if (syncInterval) {
             clearInterval(syncInterval);
             syncInterval = null;
@@ -560,6 +686,102 @@
         document.getElementById('dashboardSection').classList.add('hidden');
         document.getElementById('usernameInput').value = "";
         document.getElementById('passwordInput').value = "";
+    }
+
+    // MANAJEMEN AKSES (KHUSUS KEPEMILIKAN)
+    async function fetchAccounts() {
+        try {
+            const res = await fetch(`${getBaseUrl()}/api/accounts`);
+            const result = await res.json();
+            
+            if (result.success) {
+                renderAccountTable(result.data);
+            }
+        } catch (err) {
+            console.error("Gagal memuat akun akses:", err);
+        }
+    }
+
+    function renderAccountTable(accounts) {
+        const tbody = document.getElementById('accountTableBody');
+        tbody.innerHTML = '';
+
+        if (!accounts || accounts.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Belum ada akun tambahan.</td></tr>';
+            return;
+        }
+
+        const now = new Date();
+
+        accounts.forEach(acc => {
+            const expireDate = new Date(acc.expires_at);
+            const isExpired = expireDate < now;
+            const isKepemilikan = acc.role === 'kepemilikan';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${acc.username}</strong></td>
+                <td>${acc.password}</td>
+                <td>
+                    <span class="${isKepemilikan ? 'badge-role-owner' : 'badge-role-member'}">
+                        ${isKepemilikan ? 'Kepemilikan' : 'Member'}
+                    </span>
+                </td>
+                <td>${expireDate.toLocaleDateString('id-ID')}</td>
+                <td>
+                    <span class="${isExpired ? 'badge-expired' : 'badge-active'}">
+                        ${isExpired ? 'Habis' : 'Aktif'}
+                    </span>
+                </td>
+                <td>
+                    <button onclick="deleteAccount('${acc.id}')" class="btn-delete-sm">Hapus</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function handleAddAccount(e) {
+        e.preventDefault();
+        const username = document.getElementById('accUsername').value;
+        const password = document.getElementById('accPassword').value;
+        const role = document.getElementById('accRole').value;
+        const durationDays = document.getElementById('accDuration').value;
+
+        try {
+            const res = await fetch(`${getBaseUrl()}/api/accounts`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, role, durationDays })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                alert("Akses Akun Berhasil Ditambahkan!");
+                document.getElementById('addAccountForm').reset();
+                fetchAccounts();
+            } else {
+                alert("Gagal: " + data.message);
+            }
+        } catch (err) {
+            alert("Terjadi kesalahan sistem!");
+        }
+    }
+
+    async function deleteAccount(id) {
+        if (!confirm("Hapus akses akun ini?")) return;
+
+        try {
+            const res = await fetch(`${getBaseUrl()}/api/accounts/${id}`, { method: 'DELETE' });
+            const data = await res.json();
+            if (data.success) {
+                fetchAccounts();
+            } else {
+                alert("Gagal menghapus: " + data.message);
+            }
+        } catch (err) {
+            alert("Terjadi kesalahan jaringan!");
+        }
     }
 
     document.getElementById('uploadForm').addEventListener('submit', async (e) => {
